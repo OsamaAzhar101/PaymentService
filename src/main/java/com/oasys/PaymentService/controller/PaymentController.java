@@ -21,7 +21,7 @@ public class PaymentController {
     @PostMapping("/process")
     public ResponseEntity<String> processPayment(@RequestBody PaymentRequest paymentRequest) {
         // Logic to process the payment using paymentService
-        paymentService.processPayment(paymentRequest);
+        paymentService.processPaymentInitiate(paymentRequest);
         return ResponseEntity.ok("Payment processed successfully");
     }
 

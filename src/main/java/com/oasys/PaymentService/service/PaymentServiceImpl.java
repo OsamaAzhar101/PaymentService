@@ -17,7 +17,7 @@ public class PaymentServiceImpl implements PaymentService {
     PaymentRepository paymentRepository;
 
     @Override
-    public long processPayment(PaymentRequest paymentRequest) {
+    public long processPaymentInitiate(PaymentRequest paymentRequest) {
 
         log.info("Processing payment for Order ID: {}", paymentRequest.getOrderId());
 
