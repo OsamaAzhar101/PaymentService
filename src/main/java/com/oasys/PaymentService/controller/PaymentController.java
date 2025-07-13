@@ -1,12 +1,10 @@
 package com.oasys.PaymentService.controller;
 
 import com.oasys.PaymentService.model.PaymentRequest;
+import com.oasys.PaymentService.model.PaymentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.oasys.PaymentService.service.PaymentService;
 
 @RestController()
@@ -23,6 +21,14 @@ public class PaymentController {
         // Logic to process the payment using paymentService
         paymentService.processPaymentInitiate(paymentRequest);
         return ResponseEntity.ok("Payment processed successfully");
+    }
+
+    @GetMapping("/response/{oderId}")
+    public ResponseEntity<PaymentResponse> getPaymentDetailsByOrderId
+            (@PathVariable long orderId) {
+        // Logic to retrieve payment response using paymentService
+        PaymentResponse paymentResponse = paymentService.getPaymentDetailsByOrderId(orderId);
+        return ResponseEntity.ok(paymentResponse);
     }
 
 }

@@ -14,4 +14,9 @@ public interface PaymentRepository  extends JpaRepository<TransactionDetails, Lo
     // }
 
     // Additional methods and logic can be added as needed
+
+    TransactionDetails findByOrderID(long orderID);
+
+
+
 }

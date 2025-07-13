@@ -1,7 +1,9 @@
 package com.oasys.PaymentService.service;
 
 import com.oasys.PaymentService.entity.TransactionDetails;
+import com.oasys.PaymentService.model.PaymentMode;
 import com.oasys.PaymentService.model.PaymentRequest;
+import com.oasys.PaymentService.model.PaymentResponse;
 import com.oasys.PaymentService.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +40,30 @@ public class PaymentServiceImpl implements PaymentService {
         return transactionDetails.getTransactionId();
 
     }
+
+    @Override
+    public PaymentResponse getPaymentDetailsByOrderId(long orderId) {
+
+        log.info("Fetching payment details for Order ID: {}", orderId);
+
+        TransactionDetails transactionDetails = paymentRepository.findByOrderID(orderId);
+
+        if (transactionDetails == null) {
+            log.error("No payment details found for Order ID: {}", orderId);
+            return null;
+        }
+
+        return PaymentResponse.builder()
+                .paymentId(transactionDetails.getTransactionId())
+                .orderId(transactionDetails.getOrderID())
+                .amount(transactionDetails.getAmount())
+                .paymentStatus(transactionDetails.getPaymentStatus())
+                .paymentMode(PaymentMode.valueOf(transactionDetails.getPaymentMode()))
+                .paymentDate(transactionDetails.getPaymentDate())
+                .orderId(transactionDetails.getOrderID())
+                .paymentStatus(transactionDetails.getPaymentStatus())
+                .build();
+    }
+
+
 }
